@@ -6,10 +6,16 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Lama Sans", "sans-serif"], // Default sans font
+      },
       colors: {
-        'primary': '#FEC430',
-      }
+        primary: "#FFC700", // Custom primary color
+      },
+    },
+    variants: {
+      scrollBehavior: ['responsive'],
     },
   },
   plugins: [],
-}
+};

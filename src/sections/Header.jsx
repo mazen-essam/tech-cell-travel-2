@@ -36,7 +36,14 @@ function Header() {
         <div className="flex justify-center flex-col items-center">
           <p className="font-medium text-lg mb-10">تابع للاسفل</p>
 
-          <a >
+          <a
+            href="#Trips"
+            onClick={() =>
+              document
+                .getElementById("services")
+                .scrollIntoView({ behavior: "smooth" })
+            }
+          >
             <div className="w-[35px] h-[64px] rounded-3xl bg-white flex justify-center items-start p-2 ">
               <motion.div
                 animate={{
