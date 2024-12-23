@@ -9,15 +9,15 @@ import { motion } from "framer-motion";
 function Header() {
   return (
     <section
-      className=""
-      style={{ backgroundImage: `url(${bgImg})`, backgroundSize: "cover" }}
+      className=" font-sans"
+      style={{ backgroundImage: `url(${bgImg})`, backgroundSize: "cover" ,backgroundRepeat:"no-repeat"}}
     >
       <div>
         <Navbar />
       </div>
-      <div className="text-center text-white  pt-20 pb-32">
-        <h1 className="text-5xl mt-12 mb-10 font-bold">سافر معنا إلى العالم</h1>
-        <p className="font-medium text-lg mb-10">
+      <div className="text-center text-white  pt-28 pb-32">
+        <h1 className="text-5xl mt-12 mb-16 font-bold">سافر معنا إلى العالم</h1>
+        <p className="font-medium text-lg mb-16">
           نوفر لك أفضل الرحلات التي تحتاجها لجميع البلدان وبخدمات مخصصة لك
           ولعائلتك
         </p>
@@ -29,7 +29,7 @@ function Header() {
           </span>
         </button>
       </div>
-      <div className="text-center text-white pb-10 relative">
+      <div className="text-center text-white pb-24 relative">
         <div className="absolute md:block hidden xl:left-[40%] lg:left-[35%] left-[25%] top-[-5rem]">
           <img src={arrow} alt="" />
         </div>
