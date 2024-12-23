@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/navbar/navbar";
+import Navbar from "../components/navbar/Navbar";
 import arrow from "../assets/Designer.png";
 import bgImg from "../assets/e0cbe4be56a85ef0adaf0a4338ca0a9a.jpeg";
 import { MdKeyboardArrowLeft } from "react-icons/md";
