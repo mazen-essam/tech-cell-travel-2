@@ -8,6 +8,9 @@ function Layout() {
       <header>
         <Header />
       </header>
+        <section>
+            
+        </section>
       <footer>
         <Footer />
       </footer>
