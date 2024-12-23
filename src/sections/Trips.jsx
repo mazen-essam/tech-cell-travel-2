@@ -100,7 +100,7 @@ function Trips() {
         {items.map((item, index) => (
           <div
             key={index}
-            className="flex-shrink-0 w-1/4"
+            className="flex-shrink-0 xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/2 w-1/4"
             onDragStart={preventDragHandler} // Prevent image dragging
           >
             <Card item={item} />
