@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import Card from "../components/card/Card";
 import img1 from "../assets/f937bd2041f53c6be27a0ab05d6e5fb0.png";
-
+import { fetchTrips } from "../api/axiosconfig";
 const items = [
   {
     id: 1,
@@ -54,6 +54,16 @@ function Trips() {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [trips, setTrips] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetchTrips();
+      
+      console.log(response);
+      setTrips(response);
+    };
+    fetchData();
+  }, []);
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
