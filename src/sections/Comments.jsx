@@ -1,28 +1,17 @@
 import React from "react";
-const items = [
-  {
-    id: 1,
-    name: "محمد الأحمد",
-    comment:
-      "كانت تجربة مميزة مع خدمات رائعة قضيت أفضل إجازة لي من فترة طويلة، أنصح بالتعامل مع شركة رحلاتي",
-    image: "https://randomuser.me/api/portraits",
-  },
-  {
-    id: 2,
-    name: "ماهر عبد اللطيف",
-    comment:
-      "تقدم شركة رحلاتي خدمات مناسبة جداً لرجال الأعمال، هذا ما ساعدني في رحلتي وجعلني اختصر جداً من مشاكل الحجوزات.",
-    image: "https://randomuser.me/api/portraits",
-  },
-  {
-    id: 3,
-    name: "أسامة الأبيض",
-    comment: `يمكنني القول إنني قمت بقطاء أفضل رحلة عائلة على الإطلاق، كان الفنادق رائعة وخطة السفر ممتازة جداً
-ومريحة.`,
-    image: "https://randomuser.me/api/portraits",
-  },
-];
+import { useState,useEffect } from "react";
+import { fetchTes } from "../api/axiosconfig";
 function Comments() {
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    const fetchTes = async () => {
+      const response = await fetchTes();
+      const data = await response.data;
+      // console.log(data);
+      setItems(data);
+    };
+    fetchTes();
+  }, []);
   return (
     <section className="mt-32">
       <div className="px-8 text-center">

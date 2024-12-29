@@ -1,17 +1,18 @@
 import React, { useState,useEffect } from "react";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
-import { fetchTrips } from "../api/axiosconfig";
+import { fetchPlans } from "../api/axiosconfig";
 
 function Price() {
   const [trips,setTrips]= useState([])
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetchTrips();
-      console.log(response);
-      setTrips(response.data);
+    const fetchPlans = async () => {
+      const response = await fetchPlans();
+      const data = await response.data;
+      // console.log(data);
+      setTrips(data);
     };
-    fetchData();
+    fetchPlans();
   }, []);
   return (
     <section className="mt-32">

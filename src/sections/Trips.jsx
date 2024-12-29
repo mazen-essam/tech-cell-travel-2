@@ -1,53 +1,6 @@
-import React, { useRef, useState,useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Card from "../components/card/Card";
-import img1 from "../assets/f937bd2041f53c6be27a0ab05d6e5fb0.png";
 import { fetchTrips } from "../api/axiosconfig";
-const items = [
-  {
-    id: 1,
-    title: "اسطنبول",
-    image1: img1,
-    price: "5 أيام بتكلفة 1,500 دولار",
-  },
-  {
-    id: 2,
-    title: "اسطنبول",
-    image1: img1,
-    price: "5 أيام بتكلفة 1,500 دولار",
-  },
-  {
-    id: 3,
-    title: "اسطنبول",
-    image1: img1,
-    price: "5 أيام بتكلفة 1,500 دولار",
-  },
-  {
-    id: 4,
-    title: "اسطنبول",
-    image1: img1,
-    price: "5 أيام بتكلفة 1,500 دولار",
-  },{
-    id: 4,
-    title: "اسطنبول",
-    image1: img1,
-    price: "5 أيام بتكلفة 1,500 دولار",
-  },{
-    id: 4,
-    title: "اسطنبول",
-    image1: img1,
-    price: "5 أيام بتكلفة 1,500 دولار",
-  },{
-    id: 4,
-    title: "اسطنبول",
-    image1: img1,
-    price: "5 أيام بتكلفة 1,500 دولار",
-  },{
-    id: 4,
-    title: "اسطنبول",
-    image1: img1,
-    price: "5 أيام بتكلفة 1,500 دولار",
-  },
-];
 
 function Trips() {
   const carouselRef = useRef(null);
@@ -55,12 +8,13 @@ function Trips() {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [trips, setTrips] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetchTrips();
-      
-      console.log(response);
-      setTrips(response);
+      const data = await response.data;
+      // console.log(data);
+      setTrips(data);
     };
     fetchData();
   }, []);
@@ -69,12 +23,12 @@ function Trips() {
     setIsDragging(true);
     setStartX(e.pageX - carouselRef.current.offsetLeft);
     setScrollLeft(carouselRef.current.scrollLeft);
-    document.body.style.cursor = "grabbing"; // Change cursor during drag
+    document.body.style.cursor = "grabbing";
   };
 
   const handleMouseMove = (e) => {
     if (!isDragging) return;
-    e.preventDefault(); // Prevent default scrolling behavior
+    e.preventDefault();
     const x = e.pageX - carouselRef.current.offsetLeft;
     const walk = (x - startX) * 1.5; // Adjust speed multiplier as needed
     carouselRef.current.scrollLeft = scrollLeft - walk;
@@ -82,11 +36,29 @@ function Trips() {
 
   const handleMouseUpOrLeave = () => {
     setIsDragging(false);
-    document.body.style.cursor = "default"; // Reset cursor
+    document.body.style.cursor = "default";
+  };
+
+  const handleTouchStart = (e) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - carouselRef.current.offsetLeft);
+    setScrollLeft(carouselRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    carouselRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
   };
 
   const preventDragHandler = (e) => {
-    e.preventDefault(); // Prevent the default drag behavior for images
+    e.preventDefault();
   };
 
   return (
@@ -105,15 +77,18 @@ function Trips() {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUpOrLeave}
         onMouseLeave={handleMouseUpOrLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         onScroll={(e) => e.preventDefault()} // Prevent browser scroll conflicts
       >
-        {items.map((item, index) => (
+        {trips.map((data) => (
           <div
-            key={index}
-            className="flex-shrink-0 xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/2 w-1/4"
-            onDragStart={preventDragHandler} // Prevent image dragging
+            key={data.id}
+            className="flex-shrink-0 xl:w-1/4 lg:w-1/3 md:w-1/2 w-1/2  "
+            onDragStart={preventDragHandler}
           >
-            <Card item={item} />
+            <Card data={data} />
           </div>
         ))}
       </div>
