@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "http://rahalaty.ct.ws/api";
+const baseURL = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
   baseURL: baseURL,

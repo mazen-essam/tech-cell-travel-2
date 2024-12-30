@@ -65,7 +65,9 @@ function Trips() {
     <div className="mt-32" id="Trips">
       {/* Section Header */}
       <div className="px-12">
-        <p className="text-2xl font-semibold text-[#A5A5A5]">قم بزيارة العالم</p>
+        <p className="text-2xl font-semibold text-[#A5A5A5]">
+          قم بزيارة العالم
+        </p>
         <h2 className="text-4xl font-bold">الرحلات التي نقدمها</h2>
       </div>
 
