@@ -13,7 +13,7 @@ function Trips() {
     const fetchData = async () => {
       const response = await fetchTrips();
       const data = await response.data;
-      // console.log(data);
+      console.log(data);
       setTrips(data);
     };
     fetchData();

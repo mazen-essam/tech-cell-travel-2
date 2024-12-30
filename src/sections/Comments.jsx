@@ -4,13 +4,12 @@ import { fetchTes } from "../api/axiosconfig";
 function Comments() {
   const [items, setItems] = useState([]);
   useEffect(() => {
-    const fetchTes = async () => {
+    const fetchTest = async () => {
       const response = await fetchTes();
       const data = await response.data;
-      // console.log(data);
       setItems(data);
     };
-    fetchTes();
+    fetchTest();
   }, []);
   return (
     <section className="mt-32">
