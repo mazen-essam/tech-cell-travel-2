@@ -1,8 +1,7 @@
 import axios from "axios";
-// const baseURL = import.meta.env.VITE_API_URL;
-const baseURl ="https://travel.digital-vision-solutions.com/public/api"
+const baseURL = import.meta.env.VITE_API_URL;
 const api = axios.create({
-  baseURL: baseURl,
+  baseURL: baseURL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
@@ -30,7 +29,7 @@ export const fetchTrips = async () => {
     handleError(error, "Failed to fetch trips");
   }
 };
-export const fetchPlans = async (id) => {
+export const fetchPlans = async () => {
   try {
     const response = await api.get(`/plans`);
     const data = await response.data;
@@ -39,7 +38,7 @@ export const fetchPlans = async (id) => {
     handleError(error, "Failed to fetch plans");
   }
 };
-export const fetchServices = async (id) => {
+export const fetchServices = async () => {
   try {
     const response = await api.get(`/services`);
     const data = await response.data;
@@ -48,7 +47,7 @@ export const fetchServices = async (id) => {
     handleError(error, "Failed to fetch services");
   }
 };
-export const fetchTes = async (id) => {
+export const fetchTes = async () => {
   try {
     const response = await api.get(`/testimonials`);
     const data = await response.data;

@@ -1,8 +1,15 @@
-import React from "react";
-import { useState,useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Slider from "react-slick";
 import { fetchTes } from "../api/axiosconfig";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 function Comments() {
   const [items, setItems] = useState([]);
+  const sliderRef = useRef(null); // Ref for the slider
+
+  // Fetching the data
   useEffect(() => {
     const fetchTest = async () => {
       const response = await fetchTes();
@@ -11,35 +18,72 @@ function Comments() {
     };
     fetchTest();
   }, []);
+
+  // Slick settings
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    focusOnSelect: true,
+    rtl: true,
+    nextArrow: null, // Remove custom arrows (we'll use external buttons)
+    prevArrow: null,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
   return (
-    <section className="mt-32">
+    <section className="mt-32" id="Comments">
       <div className="px-8 text-center">
         <p className="text-[#A5A5A5] font-bold text-2xl">قالوا عنا</p>
         <h2 className="font-bold text-4xl">آراء مجموعة من عملائنا</h2>
       </div>
-      <div className=" xl:py-12 xl:px-24 lg:py-8 lg:px-12 md:py-6 md:px-10 sm:py-4 sm:px-8  gap-10 grid grid-cols-1 lg:grid-cols-3 justify-between mt-20">
-        {items.map((item) => (
-          <div key={item.id} className="bg-[#F1EFFD] p-6 rounded-lg">
-            <div className="flex space-x-1">
-              {[...Array(5)].map((_, index) => (
-                <svg
-                  key={index}
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-6 h-6 text-yellow-500"
-                >
-                  <path d="M12 17.27l6.18 3.73-1.64-7.03L21 9.24l-7.19-.61L12 2 10.19 8.63 3 9.24l5.46 4.73L6.82 21z" />
-                </svg>
-              ))}
+
+      {/* Carousel */}
+      <div className="xl:py-12 xl:px-24 lg:py-8 lg:px-12 md:py-6 md:px-10 sm:py-4 sm:px-8 mt-20">
+        <Slider ref={sliderRef} {...settings}>
+          {items.map((item) => (
+            <div key={item.id} className="p-4" dir="rtl">
+              <div className="bg-[#F1EFFD] p-6 rounded-lg">
+                <div className="flex items-center gap-4 my-8">
+                  <img src={item.avatar} alt={item.name} className="w-6 h-6" />
+                  <p className="text-xl font-bold">{item.name}</p>
+                </div>
+                <p>{item.msg}</p>
+              </div>
             </div>
-            <div className="flex items-center space-x-2 gap-4 my-8">
-              <img src={item.image} alt="" className="w-6 h-6" />
-              <p className="text-xl font-bold">{item.name}</p>
-            </div>
-            <p>{item.comment}</p>
-          </div>
-        ))}
+          ))}
+        </Slider>
+        {/* Navigation Arrows below the slider */}
+        <div className="flex justify-center mt-4 gap-4">
+          
+          <button
+            onClick={() => sliderRef.current.slickNext()} // Go to the next slide
+            className="p-1 bg-[#7755EE] rounded-full text-white ml-4"
+          >
+            <MdKeyboardArrowRight className="text-3xl" />
+          </button>
+          <button
+            onClick={() => sliderRef.current.slickPrev()} // Go to the previous slide
+            className="p-1 bg-[#7755EE] rounded-full text-white"
+          >
+            <MdKeyboardArrowLeft className="text-3xl" />
+          </button>
+        </div>
       </div>
     </section>
   );

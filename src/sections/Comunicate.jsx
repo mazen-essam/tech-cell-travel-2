@@ -4,6 +4,7 @@ import item2 from "../assets/item2.png";
 import item3 from "../assets/item3.png";
 import React, { useState } from "react";
 import { sendContactForm } from "../api/axiosconfig";
+
 const items = [
   {
     id: 1,
@@ -33,26 +34,58 @@ function Comunicate() {
   const [email, setEmail] = useState("");
   const [msg, setText] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState({
+    name: "",
+    email: "",
+    msg: "",
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Initialize error object
+    const errors = {
+      name: "",
+      email: "",
+      msg: "",
+    };
+
+    // Validation checks
+    if (!name.trim()) errors.name = "يرجى إدخال الاسم.";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) errors.email = "يرجى إدخال بريد إلكتروني صالح مثل user@gmail.com.";
+    if (!msg.trim()) errors.msg = "يرجى إدخال نص الرسالة.";
+
+    // If any error exists, update the state and stop submission
+    if (errors.name || errors.email || errors.msg) {
+      setError(errors);
+      return;
+    }
+
+    // Clear errors and proceed
+    setError({ name: "", email: "", msg: "" });
+
     try {
       const response = await sendContactForm(name, email, msg);
-      setMessage("Message sent successfully!");
+      setMessage("تم إرسال الرسالة بنجاح!");
+      setName("");
+      setEmail("");
+      setText("");
       console.log("Response:", response);
     } catch (error) {
-      setMessage("Failed to send message. Please try again.");
+      setMessage("فشل إرسال الرسالة. يرجى المحاولة مرة أخرى.");
     }
   };
+
   return (
-    <section>
+    <section id="Comunicate">
       <div className="px-12">
         <p className="text-[#A5A5A5] font-bold text-2xl">هل لديك سؤال؟</p>
         <h2 className="font-bold text-4xl">يسعدنا التواصل معك</h2>
       </div>
-      <div className=" xl:py-12 xl:px-24 lg:py-8 lg:px-12 md:py-6 md:px-10 sm:py-4 sm:px-8  gap-10 grid grid-cols-1 lg:grid-cols-2 justify-between mt-20">
+      <div className="xl:py-12 xl:px-24 lg:py-8 lg:px-12 md:py-6 md:px-10 sm:py-4 sm:px-8 gap-10 grid grid-cols-1 lg:grid-cols-2 justify-between mt-20">
         <form
-          className="bg-[#FFE7AC] col-span-1  rounded-3xl xl:py-10 xl:px-8 lg:py-8 lg:px-6 py-4 px-4 border-2 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,0.75)]"
+          className="bg-[#FFE7AC] col-span-1 rounded-3xl xl:py-10 xl:px-8 lg:py-8 lg:px-6 py-4 px-4 border-2 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,0.75)]"
           onSubmit={handleSubmit}
         >
           <label
@@ -69,6 +102,7 @@ function Comunicate() {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
+          {error.name && <p className="text-red-600 mt-2">{error.name}</p>}
           <label
             htmlFor="email"
             className="font-semibold text-xl mt-4 mb-3 block"
@@ -83,6 +117,7 @@ function Comunicate() {
             className="py-2 px-2 w-full border-2 border-black rounded-2xl"
             placeholder="سجل بريدك الشخصي"
           />
+          {error.email && <p className="text-red-600 mt-2">{error.email}</p>}
           <label
             htmlFor="subject"
             className="font-semibold text-xl mt-4 mb-3 block"
@@ -97,16 +132,17 @@ function Comunicate() {
             value={msg}
             onChange={(e) => setText(e.target.value)}
           ></textarea>
+          {error.msg && <p className="text-red-600 mt-2">{error.msg}</p>}
           <button
-            className="bg-black text-white mt-12  px-16 py-2 rounded-xl font-semibold inline-flex items-center gap-2 justify-center "
+            className="bg-black text-white mt-12 px-16 py-2 rounded-xl font-semibold inline-flex items-center gap-2 justify-center"
             type="submit"
           >
             أرسل الرسالة
           </button>
-          {message && <p>{message}</p>}
+          {message && <p className="mt-4 text-green-600">{message}</p>}
         </form>
         <div>
-          <div className="flex flex-col my-4 px-6 h-full justify-between 2xl:pl-48 ">
+          <div className="flex flex-col my-4 px-6 h-full justify-between 2xl:pl-48">
             {items.map((item) => (
               <div
                 key={item.id}
