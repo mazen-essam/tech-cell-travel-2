@@ -28,8 +28,9 @@ function Comments() {
     slidesToScroll: 1,
     focusOnSelect: true,
     rtl: true,
-    nextArrow: null, // Remove custom arrows (we'll use external buttons)
-    prevArrow: null,
+    nextArrow: false, // Remove custom arrows (we'll use external buttons)
+    prevArrow: false,
+    arrows: false,
     responsive: [
       {
         breakpoint: 1024,

@@ -21,11 +21,12 @@ function Header() {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
       }}
+      id="Header"
     >
       <div>
         <Navbar />
       </div>
-      <div className="text-center text-white pt-44 pb-32 ">
+      <div className="text-center text-white pt-32 pb-32 ">
         <h1 className="text-5xl mt-12 mb-16 font-bold">سافر معنا إلى العالم</h1>
         <p className="font-medium text-lg mb-16">
           نوفر لك أفضل الرحلات التي تحتاجها لجميع البلدان وبخدمات مخصصة لك

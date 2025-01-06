@@ -42,40 +42,46 @@ function Comunicate() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Initialize error object
     const errors = {
       name: "",
       email: "",
       msg: "",
     };
-
+  
     // Validation checks
     if (!name.trim()) errors.name = "يرجى إدخال الاسم.";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) errors.email = "يرجى إدخال بريد إلكتروني صالح مثل user@gmail.com.";
     if (!msg.trim()) errors.msg = "يرجى إدخال نص الرسالة.";
-
+  
     // If any error exists, update the state and stop submission
     if (errors.name || errors.email || errors.msg) {
       setError(errors);
       return;
     }
-
+  
     // Clear errors and proceed
     setError({ name: "", email: "", msg: "" });
-
+  
     try {
       const response = await sendContactForm(name, email, msg);
       setMessage("تم إرسال الرسالة بنجاح!");
       setName("");
       setEmail("");
       setText("");
+  
+      // Clear the success message after 3 seconds
+      setTimeout(() => setMessage(""), 3000);
+  
       console.log("Response:", response);
     } catch (error) {
       setMessage("فشل إرسال الرسالة. يرجى المحاولة مرة أخرى.");
+      setTimeout(() => setMessage(""), 3000); // Optional for error message
     }
   };
+  
 
   return (
     <section id="Comunicate">
